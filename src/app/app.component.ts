@@ -5,7 +5,7 @@ import { AgGridNg2 } from 'ag-grid-angular';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
 
@@ -14,11 +14,28 @@ export class AppComponent implements OnInit {
   title = 'app';
   rowData: any;  
 
+  // commenting this to enable grouping
+  /*
   columnDefs = [
     { headerName: 'Make', field: 'make', checkboxSelection: true},
     { headerName: 'Model', field: 'model'},
     { headerName: 'Price', field: 'price'}
   ];
+  */
+
+  columnDefs = [
+    { headerName: 'Make', field: 'make', rowGroupIndex: 0},
+    { headerName: 'Price', field: 'price' }
+  ];
+
+  autoGroupColumnDef = {
+    headerName: 'Model',
+    field: 'model',
+    cellRenderer: 'agGroupCellRenderer',
+    cellRendererParams: {
+      checkbox: true
+    }
+  }
 
   constructor(private http: HttpClient){
 
