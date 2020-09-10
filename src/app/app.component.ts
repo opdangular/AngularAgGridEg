@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AgGridNg2 } from 'ag-grid-angular';
+import { AgGridAngular } from 'ag-grid-angular';
 
 @Component({
   selector: 'app-root',
@@ -8,55 +8,50 @@ import { AgGridNg2 } from 'ag-grid-angular';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-
-  @ViewChild('agGrid') agGrid: AgGridNg2;
-
-  title = 'app';
-  rowData: any;  
-
-  // commenting this to enable grouping
-  /*
-  columnDefs = [
-    { headerName: 'Make', field: 'make', checkboxSelection: true},
-    { headerName: 'Model', field: 'model'},
-    { headerName: 'Price', field: 'price'}
-  ];
-  */
+  
+  @ViewChild('agGrid') agGrid: AgGridAngular;
+  title = 'Items';
 
   columnDefs = [
-    { headerName: 'Make', field: 'make', rowGroupIndex: 0},
-    { headerName: 'Price', field: 'price' }
+    { headerName: 'Item Name', field: 'itemName', sortable: true, filter: true, checkboxSelection: true },
+    { headerName: 'Category', field: 'category', sortable: true, filter: true  },
+    { headerName: 'Price', field: 'price', sortable: true, filter: true  },
+    { headerName: 'Date Purchased', field: 'datePurchased', sortable: true, filter: true  }
   ];
-
-  autoGroupColumnDef = {
-    headerName: 'Model',
-    field: 'model',
-    cellRenderer: 'agGroupCellRenderer',
-    cellRendererParams: {
-      checkbox: true
-    }
-  }
-
-  constructor(private http: HttpClient){
-
-  }
 
   /*
   rowData = [
-    { make: 'Toyota', model: 'Celica', price: 35000},
-    { make: 'Ford', model: 'Mondeo', price: 32000},
-    { make: 'Porsche', model: 'Boxter', price: 72000},
+    { itemName: 'Coffee', category: 'TeaCoffee', price: 3.5, datePurchased: '09/01/2020'},
+    { itemName: 'Tide', category: 'Toiletries', price: 4.5, datePurchased: '09/03/2020'},
+    { itemName: 'Towel', category: 'Household', price: 4.0, datePurchased: '09/06/2020'},
+    { itemName: 'Tea', category: 'TeaCoffee', price: 2.5, datePurchased: '08/01/2020'}
   ];
   */
 
-  ngOnInit(){
-    this.rowData = this.http.get('https://api.myjson.com/bins/15psn9');
+  rowData: any;
+
+  constructor(private http: HttpClient) {
+
   }
 
-  getSelectedRows(){
-    const selectedNodes = this.agGrid.api.getSelectedNodes();
-    const selectedData = selectedNodes.map( node => node.data );
-    const selectedDataStringPresentation = selectedData.map( node => node.make + ' ' + node.model).join(', ');
-    alert(`Selected nodes: ${selectedDataStringPresentation}`);
+  ngOnInit() {
+    this.rowData = this.http.get('http://localhost:8081/items.json');
   }
+
+  getSelectedRows() {
+    const rowInQuestion = this.agGrid.api.getModel().getRow(0);
+    console.log(`Row Model: ${rowInQuestion}`);
+    console.log(rowInQuestion.data);
+    rowInQuestion.data.itemName = "Nescafe";
+    
+
+    const nodesInQuestion = this.agGrid.api.getRenderedNodes();
+    this.agGrid.api.refreshRows(nodesInQuestion);
+    //const nodesInQuestion = this.agGrid.api.getSelectedNodes();
+    console.log(`all nodes: ${nodesInQuestion}`);
+    const dataInQuestion = nodesInQuestion.map( node => node.data );
+    const selectedDataStrPresentation = dataInQuestion.map( node => node.itemName + ' ' + node.category).join(', ');
+    alert(`Selected nodes: ${selectedDataStrPresentation}`);
+  }
+
 }

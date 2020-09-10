@@ -1,24 +1,10 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div>
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  
-    <button (click)="getSelectedRows()" >Get Selected Rows</button>
-  
-    <ag-grid-angular 
-    style="width: 500px; height: 500px;" 
-    class="ag-theme-balham" 
-    [rowData]="rowData | async" 
+<ag-grid-angular 
+    #agGrid 
+    style="width: 1000px; height: 500px;"
+    class="ag-theme-alpine"
+    [rowData]="rowData | async"
     [columnDefs]="columnDefs" 
-    [autoGroupColumnDef]="autoGroupColumnDef" 
-    [enableSorting]="true" 
-    [enableFilter]="true" 
-    rowSelection="multiple" 
-    #agGrid
-    >
+    rowSelection="multiple"
+></ag-grid-angular>
 
-    </ag-grid-angular>
-  
-
-</div>
+<button (click)="getSelectedRows()" >Get Selected Rows</button>
