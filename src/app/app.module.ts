@@ -3,17 +3,22 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AgGridModule } from 'ag-grid-angular';
+import 'ag-grid-enterprise'
 import { HttpClientModule } from '@angular/common/http';
 import { NumberFormatterComponent } from './number-formatter.component';
+import { NumericEditorComponent } from './numeric-editor.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NumberFormatterComponent,
+    NumericEditorComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AgGridModule.withComponents([ NumberFormatterComponent ])
+    /* All custom components used by ag-Grid should be listed in the AgGridModule.withComponents */
+    AgGridModule.withComponents([ NumberFormatterComponent, NumericEditorComponent ])
   ],
   providers: [],
   bootstrap: [AppComponent]

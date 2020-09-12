@@ -3,9 +3,11 @@
     style="width: 1000px; height: 500px;"
     class="ag-theme-alpine"
     [rowData]="rowData | async"
+    [autoGroupColumnDef] = "autoGroupColumnDef"
     [columnDefs]="columnDefs" 
     rowSelection="multiple" 
     [frameworkComponents]="frameworkComponents"
+    
 ></ag-grid-angular>
 
 <button (click)="getSelectedRows()" >Get Selected Rows</button>
