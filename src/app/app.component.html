@@ -4,7 +4,8 @@
     class="ag-theme-alpine"
     [rowData]="rowData | async"
     [columnDefs]="columnDefs" 
-    rowSelection="multiple"
+    rowSelection="multiple" 
+    [frameworkComponents]="frameworkComponents"
 ></ag-grid-angular>
 
 <button (click)="getSelectedRows()" >Get Selected Rows</button>

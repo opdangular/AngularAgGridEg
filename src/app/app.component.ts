@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AgGridAngular } from 'ag-grid-angular';
+import { NumberFormatterComponent } from './number-formatter.component';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,10 @@ export class AppComponent implements OnInit {
   
   @ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'Items';
+
+  frameworkComponents = {
+    numberFormatterComponent: NumberFormatterComponent
+  };
 
   columnDefs = [
     { headerName: 'Item Name', field: 'itemName', sortable: true, filter: true, checkboxSelection: true },
